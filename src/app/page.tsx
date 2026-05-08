@@ -556,19 +556,43 @@ function PolicyComparison({
         <div className="bg-slate-50 px-3 py-2 border-b border-slate-100">
           <span className="text-slate-500 font-semibold">쿠폰 정책 안내</span>
         </div>
-        <div className="divide-y divide-slate-50">
+        <div className="divide-y divide-slate-100">
+          {/* A */}
           <div className="px-3 py-2.5 flex items-start gap-3">
             <span className="mt-0.5 shrink-0 bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded text-[11px]">A</span>
             <div>
               <div className="font-semibold text-slate-700">[주말패스] 중형미만 79,900원</div>
-              <div className="text-slate-400 mt-0.5">특정 타겟 쿠폰 · 100% 할인 · 쏘카와 함께 안전한 드라이브 하세요.</div>
+              <div className="text-slate-400 mt-0.5">정액권</div>
             </div>
           </div>
+          {/* B */}
           <div className="px-3 py-2.5 flex items-start gap-3">
             <span className="mt-0.5 shrink-0 bg-violet-100 text-violet-700 font-bold px-1.5 py-0.5 rounded text-[11px]">B</span>
             <div>
               <div className="font-semibold text-slate-700">[주말패스] 중형이상 99,900원</div>
-              <div className="text-slate-400 mt-0.5">특정 타겟 쿠폰 · 100% 할인 · 쏘카와 함께 안전한 드라이브 하세요.</div>
+              <div className="text-slate-400 mt-0.5">정액권</div>
+            </div>
+          </div>
+          {/* 쿠폰 조건 */}
+          <div className="px-3 py-3">
+            <div className="text-slate-500 font-semibold mb-2">쿠폰 조건</div>
+            <div className="space-y-1 text-slate-500 leading-relaxed">
+              <div><span className="text-slate-400 mr-1">a.</span>사용 불가 일자: 3/31 ~ 6/25, 3개월 &apos;일, 월, 화, 수, 목&apos; / 대여가능 &apos;금, 토&apos; / 반납은 &apos;월, 화&apos;까지 가능</div>
+              <div><span className="text-slate-400 mr-1">b.</span>쿠폰 사용(반납) 일자: ~6/29(월)까지</div>
+              <div><span className="text-slate-400 mr-1">c.</span>사용 종료: 6/29(월) 24시까지</div>
+              <div><span className="text-slate-400 mr-1">d.</span>최소시간: 48시간</div>
+              <div><span className="text-slate-400 mr-1">e.</span>최대시간: 64시간</div>
+              <div><span className="text-slate-400 mr-1">f.</span>유효기간: 1일</div>
+              <div><span className="text-slate-400 mr-1">g.</span>차종 제한: EV, RV, 수입 제외</div>
+              <div><span className="text-slate-400 mr-1">h.</span>운행 타입: 왕복전용</div>
+            </div>
+          </div>
+          {/* 발급 방식 */}
+          <div className="px-3 py-3">
+            <div className="text-slate-500 font-semibold mb-2">발급 방식</div>
+            <div className="space-y-1 text-slate-500 leading-relaxed">
+              <div><span className="text-slate-400 mr-1">a.</span>해당 클러스터 내 쏘카존 클릭 시 자동발급</div>
+              <div><span className="text-slate-400 mr-1">b.</span>차종 리스트 배너</div>
             </div>
           </div>
         </div>
