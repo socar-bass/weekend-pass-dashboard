@@ -18,6 +18,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string>("");
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   const [filterRegion, setFilterRegion] = useState<string>("전체");
   const [filterStatus, setFilterStatus] = useState<string>("전체");
@@ -44,6 +45,26 @@ export default function Home() {
 
   useEffect(() => {
     fetchRecords();
+  }, [fetchRecords]);
+
+  const handleRefresh = useCallback(() => {
+    const WAIT_SEC = 40;
+    setCountdown(WAIT_SEC);
+    const iframe = document.createElement("iframe");
+    iframe.style.cssText = "display:none;position:fixed;width:0;height:0;border:0";
+    iframe.src = "https://script.google.com/macros/s/AKfycbzQo1l8d2qeQ2f0WYPtfaiS-WOu3jur5mfnzlDNgJ5LWwYrJpFTDKFAa0XO6TaPK8GNLA/exec";
+    document.body.appendChild(iframe);
+    setTimeout(() => iframe.parentNode?.removeChild(iframe), 15000);
+    let remaining = WAIT_SEC;
+    const timer = setInterval(() => {
+      remaining -= 1;
+      setCountdown(remaining);
+      if (remaining <= 0) {
+        clearInterval(timer);
+        setCountdown(null);
+        fetchRecords();
+      }
+    }, 1000);
   }, [fetchRecords]);
 
   const regions = ["전체", ...Array.from(new Set(records.map((r) => r.region1))).sort()];
@@ -195,10 +216,11 @@ export default function Home() {
             <span className="text-xs text-slate-400">마지막 조회: {lastUpdated}</span>
           )}
           <button
-            onClick={fetchRecords}
-            className="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded transition-colors"
+            onClick={handleRefresh}
+            disabled={loading || countdown !== null}
+            className="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded transition-colors disabled:opacity-50 min-w-[120px]"
           >
-            새로고침
+            {countdown !== null ? `동기화 중... (${countdown}초)` : "새로고침"}
           </button>
           <button
             onClick={downloadCSV}
