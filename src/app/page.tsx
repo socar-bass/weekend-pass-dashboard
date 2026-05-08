@@ -291,12 +291,7 @@ export default function Home() {
 
           {/* 지역별 */}
           <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
-            <h3 className="text-sm font-semibold text-slate-700 mb-4">지역별 이용건수</h3>
-            {regionStats.length === 0 ? (
-              <p className="text-xs text-slate-400 text-center py-8">데이터 없음</p>
-            ) : (
-              <RegionChart data={regionStats.slice(0, 12)} />
-            )}
+            <RegionChart data={regionStats.slice(0, 12)} />
           </div>
         </div>
 
@@ -422,25 +417,90 @@ function WeeklyChart({
 }
 
 /* ───────── Region Chart ───────── */
-function RegionChart({ data }: { data: { region: string; count: number; revenue: number }[] }) {
-  const maxCount = Math.max(...data.map((d) => d.count), 1);
+type RegionMetric = "count" | "revenue" | "revenuePerHour" | "gpm";
+
+const REGION_METRICS: { key: RegionMetric; label: string }[] = [
+  { key: "count",          label: "이용건수" },
+  { key: "revenue",        label: "매출" },
+  { key: "revenuePerHour", label: "시간당매출" },
+  { key: "gpm",            label: "GPM" },
+];
+
+function RegionChart({
+  data,
+}: {
+  data: { region: string; count: number; revenue: number; completedRevenue: number; profit: number; utime: number }[];
+}) {
+  const [metric, setMetric] = useState<RegionMetric>("count");
+
+  const getValue = (d: typeof data[0]): number => {
+    if (metric === "count") return d.count;
+    if (metric === "revenue") return d.revenue;
+    if (metric === "revenuePerHour") return d.utime > 0 ? Math.round(d.revenue / d.utime) : 0;
+    if (metric === "gpm") return d.completedRevenue > 0 ? Math.round((d.profit / d.completedRevenue) * 100) : 0;
+    return 0;
+  };
+
+  const getLabel = (d: typeof data[0]): string => {
+    if (metric === "count") return `${d.count}건`;
+    if (metric === "revenue") return `${Math.round(d.revenue / 10000)}만원`;
+    if (metric === "revenuePerHour") {
+      const v = d.utime > 0 ? Math.round(d.revenue / d.utime) : 0;
+      return `${v.toLocaleString()}원/h`;
+    }
+    if (metric === "gpm") {
+      return d.completedRevenue > 0
+        ? `${Math.round((d.profit / d.completedRevenue) * 100)}%`
+        : "-";
+    }
+    return "";
+  };
+
+  const sorted = [...data].sort((a, b) => getValue(b) - getValue(a));
+  const maxVal = Math.max(...sorted.map(getValue), 1);
+
   return (
-    <div className="space-y-2.5">
-      {data.map((d) => (
-        <div key={d.region} className="flex items-center gap-3 text-xs">
-          <span className="text-slate-600 w-20 shrink-0 truncate">{d.region}</span>
-          <div className="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden">
-            <div
-              className="bg-blue-400 h-4 rounded-full transition-all"
-              style={{ width: `${(d.count / maxCount) * 100}%` }}
-            />
-          </div>
-          <span className="text-slate-700 font-semibold w-6 text-right shrink-0">{d.count}</span>
-          <span className="text-slate-400 w-16 text-right shrink-0 hidden sm:block">
-            {Math.round(d.revenue / 10000)}만원
-          </span>
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-semibold text-slate-700">
+          지역별 {REGION_METRICS.find((m) => m.key === metric)?.label}
+        </h3>
+        <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs">
+          {REGION_METRICS.map((m) => (
+            <button
+              key={m.key}
+              onClick={() => setMetric(m.key)}
+              className={`px-2.5 py-1 transition-colors ${
+                metric === m.key
+                  ? "bg-slate-700 text-white font-medium"
+                  : "text-slate-500 hover:bg-slate-50"
+              }`}
+            >
+              {m.label}
+            </button>
+          ))}
         </div>
-      ))}
+      </div>
+      <div className="space-y-2.5">
+        {sorted.map((d) => {
+          const val = getValue(d);
+          const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
+          return (
+            <div key={d.region} className="flex items-center gap-3 text-xs">
+              <span className="text-slate-600 w-20 shrink-0 truncate">{d.region}</span>
+              <div className="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden">
+                <div
+                  className="bg-blue-400 h-4 rounded-full transition-all duration-300"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+              <span className="text-slate-700 font-semibold w-20 text-right shrink-0">
+                {getLabel(d)}
+              </span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
