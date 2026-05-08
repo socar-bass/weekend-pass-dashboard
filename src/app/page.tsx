@@ -652,20 +652,24 @@ function RegionTable({
 
 /* ───────── Socar Logo ───────── */
 function SocarLogo() {
+  const blue = "#1558EF";
   return (
-    <svg width="64" height="22" viewBox="0 0 64 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="SOCAR">
-      <rect width="64" height="22" rx="4" fill="#00AAFF" />
+    <svg width="90" height="26" viewBox="0 0 90 26" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="socar">
+      {/* 아이콘: 위쪽 화살표 */}
+      <path d="M2 2 L11 2 L18 13 L9 13 Z" fill={blue} />
+      {/* 아이콘: 아래쪽 화살표 */}
+      <path d="M9 13 L18 13 L25 24 L16 24 Z" fill={blue} />
+      {/* socar 텍스트 */}
       <text
-        x="32"
-        y="15.5"
-        textAnchor="middle"
-        fill="white"
-        fontFamily="Arial, sans-serif"
-        fontSize="11"
-        fontWeight="bold"
-        letterSpacing="1"
+        x="31"
+        y="19"
+        fill={blue}
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontSize="15"
+        fontWeight="800"
+        letterSpacing="-0.3"
       >
-        SOCAR
+        socar
       </text>
     </svg>
   );
