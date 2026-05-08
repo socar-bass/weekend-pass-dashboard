@@ -184,10 +184,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* 헤더 */}
-      <header className="bg-slate-800 text-white px-6 py-3 flex items-center justify-between">
+      <header className="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <SocarLogo />
-          <span className="text-base font-bold tracking-tight">주말패스 성과 대시보드</span>
+          <span className="text-base font-bold tracking-tight text-[#1558EF]">주말패스 성과 대시보드</span>
           <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">LIVE</span>
         </div>
         <div className="flex items-center gap-3">
@@ -196,13 +196,13 @@ export default function Home() {
           )}
           <button
             onClick={fetchRecords}
-            className="bg-slate-600 hover:bg-slate-500 text-white text-xs px-3 py-1.5 rounded transition-colors"
+            className="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded transition-colors"
           >
             새로고침
           </button>
           <button
             onClick={downloadCSV}
-            className="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 py-1.5 rounded transition-colors"
+            className="bg-[#1558EF] hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded transition-colors"
           >
             CSV 다운로드
           </button>
