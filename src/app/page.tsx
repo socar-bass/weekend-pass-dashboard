@@ -116,6 +116,8 @@ export default function Home() {
         completedRevenue: 0,
         profit: 0,
         utime: 0,
+        policyA: 0,
+        policyB: 0,
       };
       map.set(key, {
         ...cur,
@@ -125,9 +127,11 @@ export default function Home() {
         completedRevenue: cur.completedRevenue + (r.status === "완료" ? r.revenue || 0 : 0),
         profit: cur.profit + (r.status === "완료" && r.profit != null ? r.profit : 0),
         utime: cur.utime + (r.utime || 0),
+        policyA: cur.policyA + (r.policyId === 16311 ? 1 : 0),
+        policyB: cur.policyB + (r.policyId === 16314 ? 1 : 0),
       });
       return map;
-    }, new Map<string, { region: string; count: number; completed: number; revenue: number; completedRevenue: number; profit: number; utime: number }>())
+    }, new Map<string, { region: string; count: number; completed: number; revenue: number; completedRevenue: number; profit: number; utime: number; policyA: number; policyB: number }>())
   )
     .sort((a, b) => b[1].count - a[1].count)
     .map(([, v]) => v);
@@ -182,6 +186,7 @@ export default function Home() {
       {/* 헤더 */}
       <header className="bg-slate-800 text-white px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
+          <SocarLogo />
           <span className="text-base font-bold tracking-tight">주말패스 성과 대시보드</span>
           <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">LIVE</span>
         </div>
@@ -605,7 +610,7 @@ function PolicyComparison({
 function RegionTable({
   data,
 }: {
-  data: { region: string; count: number; completed: number; revenue: number; completedRevenue: number; profit: number }[];
+  data: { region: string; count: number; completed: number; revenue: number; completedRevenue: number; profit: number; policyA: number; policyB: number }[];
 }) {
   return (
     <div className="overflow-x-auto">
@@ -616,6 +621,8 @@ function RegionTable({
             <th className="text-right pb-2 text-slate-400 font-semibold">전체</th>
             <th className="text-right pb-2 text-slate-400 font-semibold">완료</th>
             <th className="text-right pb-2 text-slate-400 font-semibold">완료율</th>
+            <th className="text-right pb-2 text-blue-400 font-semibold">A</th>
+            <th className="text-right pb-2 text-violet-400 font-semibold">B</th>
             <th className="text-right pb-2 text-slate-400 font-semibold">매출(만원)</th>
             <th className="text-right pb-2 text-slate-400 font-semibold">GPM</th>
           </tr>
@@ -630,6 +637,8 @@ function RegionTable({
                 <td className="py-2.5 text-right text-slate-600">{d.count}</td>
                 <td className="py-2.5 text-right text-green-600 font-medium">{d.completed}</td>
                 <td className="py-2.5 text-right text-slate-500">{completionRate}%</td>
+                <td className="py-2.5 text-right text-blue-500 font-medium">{d.policyA}</td>
+                <td className="py-2.5 text-right text-violet-500 font-medium">{d.policyB}</td>
                 <td className="py-2.5 text-right text-slate-700">{Math.round(d.revenue / 10000).toLocaleString()}</td>
                 <td className="py-2.5 text-right font-semibold text-blue-600">{gpm}</td>
               </tr>
@@ -638,5 +647,26 @@ function RegionTable({
         </tbody>
       </table>
     </div>
+  );
+}
+
+/* ───────── Socar Logo ───────── */
+function SocarLogo() {
+  return (
+    <svg width="64" height="22" viewBox="0 0 64 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="SOCAR">
+      <rect width="64" height="22" rx="4" fill="#00AAFF" />
+      <text
+        x="32"
+        y="15.5"
+        textAnchor="middle"
+        fill="white"
+        fontFamily="Arial, sans-serif"
+        fontSize="11"
+        fontWeight="bold"
+        letterSpacing="1"
+      >
+        SOCAR
+      </text>
+    </svg>
   );
 }
