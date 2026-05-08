@@ -490,6 +490,29 @@ function PolicyComparison({
           </div>
         );
       })}
+
+      {/* 정책 설명 */}
+      <div className="mt-4 border border-slate-100 rounded-xl overflow-hidden text-xs">
+        <div className="bg-slate-50 px-3 py-2 border-b border-slate-100">
+          <span className="text-slate-500 font-semibold">쿠폰 정책 안내</span>
+        </div>
+        <div className="divide-y divide-slate-50">
+          <div className="px-3 py-2.5 flex items-start gap-3">
+            <span className="mt-0.5 shrink-0 bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded text-[11px]">A</span>
+            <div>
+              <div className="font-semibold text-slate-700">[주말패스] 중형미만 79,900원</div>
+              <div className="text-slate-400 mt-0.5">특정 타겟 쿠폰 · 100% 할인 · 쏘카와 함께 안전한 드라이브 하세요.</div>
+            </div>
+          </div>
+          <div className="px-3 py-2.5 flex items-start gap-3">
+            <span className="mt-0.5 shrink-0 bg-violet-100 text-violet-700 font-bold px-1.5 py-0.5 rounded text-[11px]">B</span>
+            <div>
+              <div className="font-semibold text-slate-700">[주말패스] 중형이상 99,900원</div>
+              <div className="text-slate-400 mt-0.5">특정 타겟 쿠폰 · 100% 할인 · 쏘카와 함께 안전한 드라이브 하세요.</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
