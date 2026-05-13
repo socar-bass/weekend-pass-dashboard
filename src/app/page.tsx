@@ -52,7 +52,7 @@ export default function Home() {
     setCountdown(WAIT_SEC);
     const iframe = document.createElement("iframe");
     iframe.style.cssText = "display:none;position:fixed;width:0;height:0;border:0";
-    iframe.src = "https://script.google.com/macros/s/AKfycbwEqDKjdK_CdFR1RfhI3BEAaDnMkIkSdjnkiVykVdaHQQxyC-16t5Qgm7Wjyb9ftWuxpQ/exec";
+    iframe.src = "https://script.google.com/macros/s/AKfycbz4PK_7j6LGwmFr_oesXWj-wpTWq5vNfBguWp2J0TNw2i3fbhLdSzfUY_QuOqhd2iLwhw/exec";
     document.body.appendChild(iframe);
     setTimeout(() => iframe.parentNode?.removeChild(iframe), 15000);
     let remaining = WAIT_SEC;
