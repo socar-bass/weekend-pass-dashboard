@@ -196,35 +196,51 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-slate-50 text-slate-400 text-sm">
+      <div className="flex items-center justify-center h-screen text-sm" style={{ background: "var(--bg-grouped)", color: "var(--text-quaternary)" }}>
         데이터를 불러오는 중...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen" style={{ background: "var(--bg-grouped)" }}>
       {/* 헤더 */}
-      <header className="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between">
+      <header className="socar-topbar flex items-center justify-between" style={{ padding: "12px 24px" }}>
         <div className="flex items-center gap-3">
-          <SocarLogo />
-          <span className="text-base font-bold tracking-tight text-[#1558EF]">주말패스 성과 대시보드</span>
-          <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">LIVE</span>
+          <img src="/socar-logo.png" alt="SOCAR" style={{ height: "28px", width: "auto" }} />
+          <div style={{ width: "1px", height: "24px", background: "var(--border-base)" }} />
+          <span className="text-base font-bold tracking-tight" style={{ color: "var(--socar-blue)" }}>
+            주말패스 성과 대시보드
+          </span>
+          <span
+            className="text-xs px-2 py-0.5 font-semibold"
+            style={{
+              background: "var(--socar-green)",
+              color: "white",
+              borderRadius: "var(--radius-pill)",
+            }}
+          >
+            LIVE
+          </span>
         </div>
         <div className="flex items-center gap-3">
           {lastUpdated && (
-            <span className="text-xs text-slate-400">마지막 조회: {lastUpdated}</span>
+            <span className="text-xs" style={{ color: "var(--text-quaternary)" }}>
+              마지막 조회: {lastUpdated}
+            </span>
           )}
           <button
             onClick={handleRefresh}
             disabled={loading || countdown !== null}
-            className="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded transition-colors disabled:opacity-50 min-w-[120px]"
+            className="socar-btn-medium-outlined-grey"
+            style={{ minWidth: "120px", fontSize: "12px", height: "32px" }}
           >
             {countdown !== null ? `동기화 중... (${countdown}초)` : "새로고침"}
           </button>
           <button
             onClick={downloadCSV}
-            className="bg-[#1558EF] hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded transition-colors"
+            className="socar-btn-large-fill-blue"
+            style={{ minWidth: "auto", height: "32px", padding: "0 14px", fontSize: "12px" }}
           >
             CSV 다운로드
           </button>
@@ -233,43 +249,49 @@ export default function Home() {
 
       <div className="max-w-screen-xl mx-auto p-4 space-y-4">
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-2 rounded text-sm">
-            {error}
+          <div className="socar-alert-error">
+            <p className="socar-alert-error-title">{error}</p>
           </div>
         )}
 
         {/* KPI 요약 */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="bg-slate-50 border-b border-slate-100 px-5 py-2.5">
-            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">성과 요약</span>
+        <div className="socar-card overflow-hidden">
+          <div
+            className="px-5 py-2.5"
+            style={{ background: "var(--bg-grouped)", borderBottom: "1px solid var(--border-base)" }}
+          >
+            <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: "var(--text-tertiary)" }}>
+              성과 요약
+            </span>
           </div>
-          <div className="divide-y divide-slate-50">
+          <div>
             <KPIRow
-              badge="총계" badgeColor="bg-slate-700"
+              badge="총계" badgeBg="var(--socar-grey-100)"
               count={filtered.length}
               revenue={totalRevenue} revenueNote=""
               gpm={gpmStr}
               utime={totalUtime}
             />
             <KPIRow
-              badge="완료 기준" badgeColor="bg-green-600"
+              badge="완료 기준" badgeBg="var(--socar-green)"
               count={completed.length}
               revenue={completedRevenue} revenueNote=""
               gpm={gpmStr}
               utime={completedUtime}
             />
             <KPIRow
-              badge="예약 기준" badgeColor="bg-amber-500"
+              badge="예약 기준" badgeBg="var(--socar-orange)"
               count={reserved.length}
               revenue={reservedRevenue} revenueNote="추정치"
               gpm="미집계"
               utime={reservedUtime}
+              isLast
             />
           </div>
         </div>
 
         {/* 필터 */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm px-4 py-3">
+        <div className="socar-card px-4 py-3">
           <div className="flex items-center gap-2 flex-wrap">
             <Select
               value={filterWeek}
@@ -296,9 +318,9 @@ export default function Home() {
               placeholder="지역, 클러스터, 예약ID 검색..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="border border-slate-200 rounded-lg px-3 py-1.5 text-sm flex-1 min-w-40 focus:outline-none focus:border-blue-400"
+              className="socar-input flex-1 min-w-40"
             />
-            <span className="text-xs text-slate-400 ml-auto shrink-0">
+            <span className="text-xs ml-auto shrink-0" style={{ color: "var(--text-quaternary)" }}>
               {fmt(filtered.length)}건 / 전체 {fmt(records.length)}건
             </span>
           </div>
@@ -307,8 +329,8 @@ export default function Home() {
         {/* 차트 2열 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* 주차별 추이 */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
-            <h3 className="text-sm font-semibold text-slate-700 mb-4">주차별 이용건수 추이</h3>
+          <div className="socar-card p-5">
+            <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>주차별 이용건수 추이</h3>
             {weeklyStats.length === 0 ? (
               <p className="text-xs text-slate-400 text-center py-8">데이터 없음</p>
             ) : (
@@ -317,7 +339,7 @@ export default function Home() {
           </div>
 
           {/* 지역별 */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+          <div className="socar-card p-5">
             <RegionChart data={regionStats.slice(0, 12)} />
           </div>
         </div>
@@ -325,14 +347,14 @@ export default function Home() {
         {/* 하단 2열 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* 정책 A/B 비교 */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
-            <h3 className="text-sm font-semibold text-slate-700 mb-4">주말패스 A / B 비교</h3>
+          <div className="socar-card p-5">
+            <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>주말패스 A / B 비교</h3>
             <PolicyComparison data={policyStats} total={filtered.length} />
           </div>
 
           {/* 지역별 성과 테이블 */}
-          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
-            <h3 className="text-sm font-semibold text-slate-700 mb-4">지역별 성과 상세</h3>
+          <div className="socar-card p-5">
+            <h3 className="text-sm font-semibold mb-4" style={{ color: "var(--text-primary)" }}>지역별 성과 상세</h3>
             <RegionTable data={regionStats.slice(0, 10)} />
           </div>
         </div>
@@ -343,16 +365,28 @@ export default function Home() {
 
 /* ───────── KPI Row ───────── */
 function KPIRow({
-  badge, badgeColor, count, revenue, revenueNote, gpm, utime,
+  badge, badgeBg, count, revenue, revenueNote, gpm, utime, isLast,
 }: {
-  badge: string; badgeColor: string;
+  badge: string; badgeBg: string;
   count: number; revenue: number; revenueNote: string;
   gpm: string; utime: number;
+  isLast?: boolean;
 }) {
   return (
-    <div className="px-5 py-4 grid grid-cols-5 items-center gap-6">
+    <div
+      className="px-5 py-4 grid grid-cols-5 items-center gap-6"
+      style={{ borderBottom: isLast ? "none" : "1px solid var(--socar-grey-015)" }}
+    >
       <div>
-        <span className={`inline-block text-white text-xs font-semibold px-2.5 py-1 rounded-md ${badgeColor}`}>
+        <span
+          className="inline-block text-xs font-semibold px-2.5 py-1"
+          style={{
+            background: badgeBg,
+            color: "white",
+            borderRadius: "var(--radius-sm)",
+            letterSpacing: "var(--letter-spacing-base)",
+          }}
+        >
           {badge}
         </span>
       </div>
@@ -364,18 +398,18 @@ function KPIRow({
       <KPICell
         label="GPM"
         value={gpm}
-        valueColor={gpm === "미집계" ? "text-slate-400" : "text-blue-600"}
+        valueColor={gpm === "미집계" ? "var(--text-quaternary)" : "var(--socar-blue)"}
       />
       <KPICell label="이용시간" value={`${Math.round(utime).toLocaleString("ko-KR")}h`} />
     </div>
   );
 }
 
-function KPICell({ label, value, valueColor = "text-slate-800" }: { label: string; value: string; valueColor?: string }) {
+function KPICell({ label, value, valueColor = "var(--text-primary)" }: { label: string; value: string; valueColor?: string }) {
   return (
     <div>
-      <div className="text-[11px] text-slate-400 mb-1">{label}</div>
-      <div className={`text-base font-bold leading-tight ${valueColor}`}>{value}</div>
+      <div className="text-[11px] mb-1" style={{ color: "var(--text-quaternary)" }}>{label}</div>
+      <div className="text-base font-bold leading-tight" style={{ color: valueColor }}>{value}</div>
     </div>
   );
 }
@@ -392,7 +426,8 @@ function Select({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="border border-slate-200 rounded-lg px-2 py-1.5 text-sm bg-white focus:outline-none focus:border-blue-400"
+      className="socar-input"
+      style={{ paddingRight: "8px", cursor: "pointer" }}
     >
       {options.map((o) => (
         <option key={o.value} value={o.value}>{o.label}</option>
@@ -412,31 +447,34 @@ function WeeklyChart({
     <div className="space-y-2.5">
       {data.map((d) => (
         <div key={d.week} className="flex items-center gap-3 text-xs">
-          <span className="text-slate-400 w-8 shrink-0 text-right">{d.week}주</span>
-          <div className="flex-1 flex h-6 rounded overflow-hidden bg-slate-100 relative">
+          <span className="w-8 shrink-0 text-right" style={{ color: "var(--text-quaternary)" }}>{d.week}주</span>
+          <div
+            className="flex-1 flex h-6 overflow-hidden relative"
+            style={{ background: "var(--socar-grey-015)", borderRadius: "var(--radius-sm)" }}
+          >
             <div
-              className="bg-green-400 h-full"
-              style={{ width: `${(d.completed / maxCount) * 100}%` }}
+              className="h-full"
+              style={{ width: `${(d.completed / maxCount) * 100}%`, background: "var(--socar-green)" }}
               title={`완료: ${d.completed}건`}
             />
             <div
-              className="bg-amber-300 h-full"
-              style={{ width: `${(d.reserved / maxCount) * 100}%` }}
+              className="h-full"
+              style={{ width: `${(d.reserved / maxCount) * 100}%`, background: "var(--socar-orange)" }}
               title={`예약중: ${d.reserved}건`}
             />
           </div>
-          <span className="text-slate-600 font-semibold w-8 text-right shrink-0">{d.count}</span>
-          <span className="text-slate-400 w-16 text-right shrink-0 hidden sm:block">
+          <span className="font-semibold w-8 text-right shrink-0" style={{ color: "var(--text-secondary)" }}>{d.count}</span>
+          <span className="w-16 text-right shrink-0 hidden sm:block" style={{ color: "var(--text-quaternary)" }}>
             {Math.round(d.revenue / 10000)}만원
           </span>
         </div>
       ))}
-      <div className="flex gap-4 pt-1 text-xs text-slate-400">
+      <div className="flex gap-4 pt-1 text-xs" style={{ color: "var(--text-quaternary)" }}>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm bg-green-400 inline-block" />완료
+          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: "var(--socar-green)" }} />완료
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-sm bg-amber-300 inline-block" />예약중
+          <span className="w-3 h-3 rounded-sm inline-block" style={{ background: "var(--socar-orange)" }} />예약중
         </span>
       </div>
     </div>
@@ -489,19 +527,23 @@ function RegionChart({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-slate-700">
+        <h3 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
           지역별 {REGION_METRICS.find((m) => m.key === metric)?.label}
         </h3>
-        <div className="flex rounded-lg border border-slate-200 overflow-hidden text-xs">
+        <div
+          className="flex overflow-hidden text-xs"
+          style={{ border: "1px solid var(--border-base)", borderRadius: "var(--radius-md)" }}
+        >
           {REGION_METRICS.map((m) => (
             <button
               key={m.key}
               onClick={() => setMetric(m.key)}
-              className={`px-2.5 py-1 transition-colors ${
-                metric === m.key
-                  ? "bg-slate-700 text-white font-medium"
-                  : "text-slate-500 hover:bg-slate-50"
-              }`}
+              className="px-2.5 py-1 transition-colors"
+              style={{
+                background: metric === m.key ? "var(--socar-grey-100)" : "transparent",
+                color: metric === m.key ? "white" : "var(--text-tertiary)",
+                fontWeight: metric === m.key ? 600 : 400,
+              }}
             >
               {m.label}
             </button>
@@ -514,14 +556,17 @@ function RegionChart({
           const pct = maxVal > 0 ? (val / maxVal) * 100 : 0;
           return (
             <div key={d.region} className="flex items-center gap-3 text-xs">
-              <span className="text-slate-600 w-20 shrink-0 truncate">{d.region}</span>
-              <div className="flex-1 bg-slate-100 rounded-full h-4 overflow-hidden">
+              <span className="w-20 shrink-0 truncate" style={{ color: "var(--text-secondary)" }}>{d.region}</span>
+              <div
+                className="flex-1 h-4 overflow-hidden"
+                style={{ background: "var(--socar-grey-015)", borderRadius: "var(--radius-pill)" }}
+              >
                 <div
-                  className="bg-blue-400 h-4 rounded-full transition-all duration-300"
-                  style={{ width: `${pct}%` }}
+                  className="h-4 transition-all duration-300"
+                  style={{ width: `${pct}%`, background: "var(--socar-blue)", borderRadius: "var(--radius-pill)" }}
                 />
               </div>
-              <span className="text-slate-700 font-semibold w-20 text-right shrink-0">
+              <span className="font-semibold w-20 text-right shrink-0" style={{ color: "var(--text-primary)" }}>
                 {getLabel(d)}
               </span>
             </div>
@@ -546,32 +591,41 @@ function PolicyComparison({
         const isA = p.id === 16311;
         const pct = total > 0 ? Math.round((p.count / total) * 100) : 0;
         const gpm = p.completedRevenue > 0 ? Math.round((p.profit / p.completedRevenue) * 100) + "%" : "-";
+        const themeBg = isA ? "var(--socar-blue-soft)" : "var(--socar-purple-soft)";
+        const themeFg = isA ? "var(--socar-blue-dark)" : "var(--socar-purple-dark)";
+        const themeBar = isA ? "var(--socar-blue)" : "var(--socar-purple)";
         return (
           <div key={p.id}>
             <div className="flex items-center justify-between mb-2">
-              <span className={`text-xs font-bold px-2 py-0.5 rounded ${isA ? "bg-blue-100 text-blue-700" : "bg-violet-100 text-violet-700"}`}>
+              <span
+                className="text-xs font-bold px-2 py-0.5"
+                style={{ background: themeBg, color: themeFg, borderRadius: "var(--radius-sm)" }}
+              >
                 {p.label}
               </span>
-              <span className="text-xs text-slate-500">{p.count.toLocaleString()}건 ({pct}%)</span>
+              <span className="text-xs" style={{ color: "var(--text-tertiary)" }}>{p.count.toLocaleString()}건 ({pct}%)</span>
             </div>
-            <div className="bg-slate-100 rounded-full h-3 overflow-hidden mb-3">
+            <div
+              className="h-3 overflow-hidden mb-3"
+              style={{ background: "var(--socar-grey-015)", borderRadius: "var(--radius-pill)" }}
+            >
               <div
-                className={`h-3 rounded-full ${isA ? "bg-blue-400" : "bg-violet-400"}`}
-                style={{ width: `${(p.count / maxCount) * 100}%` }}
+                className="h-3"
+                style={{ width: `${(p.count / maxCount) * 100}%`, background: themeBar, borderRadius: "var(--radius-pill)" }}
               />
             </div>
             <div className="grid grid-cols-3 gap-2 text-xs">
-              <div className="bg-slate-50 rounded-lg p-2.5">
-                <div className="text-slate-400 mb-0.5">매출 총합</div>
-                <div className="font-semibold text-slate-700">{Math.round(p.revenue / 10000).toLocaleString()}만원</div>
+              <div className="p-2.5" style={{ background: "var(--bg-grouped)", borderRadius: "var(--radius-md)" }}>
+                <div className="mb-0.5" style={{ color: "var(--text-quaternary)" }}>매출 총합</div>
+                <div className="font-semibold" style={{ color: "var(--text-primary)" }}>{Math.round(p.revenue / 10000).toLocaleString()}만원</div>
               </div>
-              <div className="bg-slate-50 rounded-lg p-2.5">
-                <div className="text-slate-400 mb-0.5">GPM</div>
-                <div className="font-semibold text-blue-600">{gpm}</div>
+              <div className="p-2.5" style={{ background: "var(--bg-grouped)", borderRadius: "var(--radius-md)" }}>
+                <div className="mb-0.5" style={{ color: "var(--text-quaternary)" }}>GPM</div>
+                <div className="font-semibold" style={{ color: "var(--socar-blue)" }}>{gpm}</div>
               </div>
-              <div className="bg-slate-50 rounded-lg p-2.5">
-                <div className="text-slate-400 mb-0.5">이용시간</div>
-                <div className="font-semibold text-slate-700">{Math.round(p.utime).toLocaleString()}h</div>
+              <div className="p-2.5" style={{ background: "var(--bg-grouped)", borderRadius: "var(--radius-md)" }}>
+                <div className="mb-0.5" style={{ color: "var(--text-quaternary)" }}>이용시간</div>
+                <div className="font-semibold" style={{ color: "var(--text-primary)" }}>{Math.round(p.utime).toLocaleString()}h</div>
               </div>
             </div>
           </div>
@@ -579,47 +633,59 @@ function PolicyComparison({
       })}
 
       {/* 정책 설명 */}
-      <div className="mt-4 border border-slate-100 rounded-xl overflow-hidden text-xs">
-        <div className="bg-slate-50 px-3 py-2 border-b border-slate-100">
-          <span className="text-slate-500 font-semibold">쿠폰 정책 안내</span>
+      <div
+        className="mt-4 overflow-hidden text-xs"
+        style={{ border: "1px solid var(--border-base)", borderRadius: "var(--radius-lg)" }}
+      >
+        <div
+          className="px-3 py-2"
+          style={{ background: "var(--bg-grouped)", borderBottom: "1px solid var(--border-base)" }}
+        >
+          <span className="font-semibold" style={{ color: "var(--text-secondary)" }}>쿠폰 정책 안내</span>
         </div>
-        <div className="divide-y divide-slate-100">
+        <div>
           {/* A */}
-          <div className="px-3 py-2.5 flex items-start gap-3">
-            <span className="mt-0.5 shrink-0 bg-blue-100 text-blue-700 font-bold px-1.5 py-0.5 rounded text-[11px]">A</span>
+          <div className="px-3 py-2.5 flex items-start gap-3" style={{ borderBottom: "1px solid var(--socar-grey-015)" }}>
+            <span
+              className="mt-0.5 shrink-0 font-bold px-1.5 py-0.5 text-[11px]"
+              style={{ background: "var(--socar-blue-soft)", color: "var(--socar-blue-dark)", borderRadius: "var(--radius-sm)" }}
+            >A</span>
             <div>
-              <div className="font-semibold text-slate-700">[주말패스] 중형미만 79,900원</div>
-              <div className="text-slate-400 mt-0.5">정액권</div>
+              <div className="font-semibold" style={{ color: "var(--text-primary)" }}>[주말패스] 중형미만 79,900원</div>
+              <div className="mt-0.5" style={{ color: "var(--text-quaternary)" }}>정액권</div>
             </div>
           </div>
           {/* B */}
-          <div className="px-3 py-2.5 flex items-start gap-3">
-            <span className="mt-0.5 shrink-0 bg-violet-100 text-violet-700 font-bold px-1.5 py-0.5 rounded text-[11px]">B</span>
+          <div className="px-3 py-2.5 flex items-start gap-3" style={{ borderBottom: "1px solid var(--socar-grey-015)" }}>
+            <span
+              className="mt-0.5 shrink-0 font-bold px-1.5 py-0.5 text-[11px]"
+              style={{ background: "var(--socar-purple-soft)", color: "var(--socar-purple-dark)", borderRadius: "var(--radius-sm)" }}
+            >B</span>
             <div>
-              <div className="font-semibold text-slate-700">[주말패스] 중형이상 99,900원</div>
-              <div className="text-slate-400 mt-0.5">정액권</div>
+              <div className="font-semibold" style={{ color: "var(--text-primary)" }}>[주말패스] 중형이상 99,900원</div>
+              <div className="mt-0.5" style={{ color: "var(--text-quaternary)" }}>정액권</div>
             </div>
           </div>
           {/* 쿠폰 조건 */}
-          <div className="px-3 py-3">
-            <div className="text-slate-500 font-semibold mb-2">쿠폰 조건</div>
-            <div className="space-y-1 text-slate-500 leading-relaxed">
-              <div><span className="text-slate-400 mr-1">a.</span>사용 불가 일자: 3/31 ~ 6/25, 3개월 &apos;일, 월, 화, 수, 목&apos; / 대여가능 &apos;금, 토&apos; / 반납은 &apos;월, 화&apos;까지 가능</div>
-              <div><span className="text-slate-400 mr-1">b.</span>쿠폰 사용(반납) 일자: ~6/29(월)까지</div>
-              <div><span className="text-slate-400 mr-1">c.</span>사용 종료: 6/29(월) 24시까지</div>
-              <div><span className="text-slate-400 mr-1">d.</span>최소시간: 48시간</div>
-              <div><span className="text-slate-400 mr-1">e.</span>최대시간: 64시간</div>
-              <div><span className="text-slate-400 mr-1">f.</span>유효기간: 1일</div>
-              <div><span className="text-slate-400 mr-1">g.</span>차종 제한: EV, RV, 수입 제외</div>
-              <div><span className="text-slate-400 mr-1">h.</span>운행 타입: 왕복전용</div>
+          <div className="px-3 py-3" style={{ borderBottom: "1px solid var(--socar-grey-015)" }}>
+            <div className="font-semibold mb-2" style={{ color: "var(--text-secondary)" }}>쿠폰 조건</div>
+            <div className="space-y-1 leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>a.</span>사용 불가 일자: 3/31 ~ 6/25, 3개월 &apos;일, 월, 화, 수, 목&apos; / 대여가능 &apos;금, 토&apos; / 반납은 &apos;월, 화&apos;까지 가능</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>b.</span>쿠폰 사용(반납) 일자: ~6/29(월)까지</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>c.</span>사용 종료: 6/29(월) 24시까지</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>d.</span>최소시간: 48시간</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>e.</span>최대시간: 64시간</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>f.</span>유효기간: 1일</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>g.</span>차종 제한: EV, RV, 수입 제외</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>h.</span>운행 타입: 왕복전용</div>
             </div>
           </div>
           {/* 발급 방식 */}
           <div className="px-3 py-3">
-            <div className="text-slate-500 font-semibold mb-2">발급 방식</div>
-            <div className="space-y-1 text-slate-500 leading-relaxed">
-              <div><span className="text-slate-400 mr-1">a.</span>해당 클러스터 내 쏘카존 클릭 시 자동발급</div>
-              <div><span className="text-slate-400 mr-1">b.</span>차종 리스트 배너</div>
+            <div className="font-semibold mb-2" style={{ color: "var(--text-secondary)" }}>발급 방식</div>
+            <div className="space-y-1 leading-relaxed" style={{ color: "var(--text-tertiary)" }}>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>a.</span>해당 클러스터 내 쏘카존 클릭 시 자동발급</div>
+              <div><span className="mr-1" style={{ color: "var(--text-quaternary)" }}>b.</span>차종 리스트 배너</div>
             </div>
           </div>
         </div>
@@ -638,31 +704,35 @@ function RegionTable({
     <div className="overflow-x-auto">
       <table className="w-full text-xs">
         <thead>
-          <tr className="border-b-2 border-slate-100">
-            <th className="text-left pb-2 text-slate-400 font-semibold">지역</th>
-            <th className="text-right pb-2 text-slate-400 font-semibold">전체</th>
-            <th className="text-right pb-2 text-slate-400 font-semibold">완료</th>
-            <th className="text-right pb-2 text-slate-400 font-semibold">완료율</th>
-            <th className="text-right pb-2 text-blue-400 font-semibold">A</th>
-            <th className="text-right pb-2 text-violet-400 font-semibold">B</th>
-            <th className="text-right pb-2 text-slate-400 font-semibold">매출(만원)</th>
-            <th className="text-right pb-2 text-slate-400 font-semibold">GPM</th>
+          <tr style={{ borderBottom: "2px solid var(--border-base)" }}>
+            <th className="text-left pb-2 font-semibold" style={{ color: "var(--text-tertiary)" }}>지역</th>
+            <th className="text-right pb-2 font-semibold" style={{ color: "var(--text-tertiary)" }}>전체</th>
+            <th className="text-right pb-2 font-semibold" style={{ color: "var(--text-tertiary)" }}>완료</th>
+            <th className="text-right pb-2 font-semibold" style={{ color: "var(--text-tertiary)" }}>완료율</th>
+            <th className="text-right pb-2 font-semibold" style={{ color: "var(--socar-blue)" }}>A</th>
+            <th className="text-right pb-2 font-semibold" style={{ color: "var(--socar-purple)" }}>B</th>
+            <th className="text-right pb-2 font-semibold" style={{ color: "var(--text-tertiary)" }}>매출(만원)</th>
+            <th className="text-right pb-2 font-semibold" style={{ color: "var(--text-tertiary)" }}>GPM</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-50">
+        <tbody>
           {data.map((d) => {
             const completionRate = d.count > 0 ? Math.round((d.completed / d.count) * 100) : 0;
             const gpm = d.completedRevenue > 0 ? Math.round((d.profit / d.completedRevenue) * 100) + "%" : "-";
             return (
-              <tr key={d.region} className="hover:bg-slate-50 transition-colors">
-                <td className="py-2.5 font-medium text-slate-700">{d.region}</td>
-                <td className="py-2.5 text-right text-slate-600">{d.count}</td>
-                <td className="py-2.5 text-right text-green-600 font-medium">{d.completed}</td>
-                <td className="py-2.5 text-right text-slate-500">{completionRate}%</td>
-                <td className="py-2.5 text-right text-blue-500 font-medium">{d.policyA}</td>
-                <td className="py-2.5 text-right text-violet-500 font-medium">{d.policyB}</td>
-                <td className="py-2.5 text-right text-slate-700">{Math.round(d.revenue / 10000).toLocaleString()}</td>
-                <td className="py-2.5 text-right font-semibold text-blue-600">{gpm}</td>
+              <tr
+                key={d.region}
+                className="socar-table-row transition-colors"
+                style={{ borderBottom: "1px solid var(--socar-grey-015)" }}
+              >
+                <td className="py-2.5 font-medium" style={{ color: "var(--text-primary)" }}>{d.region}</td>
+                <td className="py-2.5 text-right" style={{ color: "var(--text-secondary)" }}>{d.count}</td>
+                <td className="py-2.5 text-right font-medium" style={{ color: "var(--socar-green-dark)" }}>{d.completed}</td>
+                <td className="py-2.5 text-right" style={{ color: "var(--text-tertiary)" }}>{completionRate}%</td>
+                <td className="py-2.5 text-right font-medium" style={{ color: "var(--socar-blue)" }}>{d.policyA}</td>
+                <td className="py-2.5 text-right font-medium" style={{ color: "var(--socar-purple)" }}>{d.policyB}</td>
+                <td className="py-2.5 text-right" style={{ color: "var(--text-primary)" }}>{Math.round(d.revenue / 10000).toLocaleString()}</td>
+                <td className="py-2.5 text-right font-semibold" style={{ color: "var(--socar-blue)" }}>{gpm}</td>
               </tr>
             );
           })}
@@ -672,9 +742,3 @@ function RegionTable({
   );
 }
 
-/* ───────── Socar Logo ───────── */
-function SocarLogo() {
-  return (
-    <img src="/socar-logo.png" alt="socar" width={70} height={20} style={{ display: "block" }} />
-  );
-}

@@ -1,19 +1,403 @@
 @import "tailwindcss";
 
+/* ========================================================================
+   Socar Frame 2.0 Design Tokens
+   ref: c:\Users\socar\Desktop\socar-frame-design-guide.md
+   ======================================================================== */
+
 :root {
-  --background: #f8fafc;
-  --foreground: #171717;
+  /* ---- Basic Colors: Grey (8단계) ---- */
+  --socar-grey-010: #F5F6F7;
+  --socar-grey-015: #EDEEF0;
+  --socar-grey-020: #E0E2E5;
+  --socar-grey-030: #BFC2C7;
+  --socar-grey-040: #9CA1A8;
+  --socar-grey-060: #6B7079;
+  --socar-grey-080: #3D4147;
+  --socar-grey-100: #171B1C;
+
+  /* ---- Basic Colors: Tint Main (Socar Marine Blue) ---- */
+  --socar-blue-soft: #E5F0FF;
+  --socar-blue-light: #4D8FFF;
+  --socar-blue: #0066FF;
+  --socar-blue-dark: #0052CC;
+  --socar-blue-darker: #003D99;
+
+  /* ---- Basic Colors: Service Tints ---- */
+  --socar-red-soft: #FFE5E8;
+  --socar-red: #E5354A;
+  --socar-red-dark: #B82838;
+
+  --socar-orange-soft: #FFE9D9;
+  --socar-orange: #FF6B0F;
+  --socar-orange-dark: #C75100;
+
+  --socar-purple-soft: #F0E8FF;
+  --socar-purple: #7C3AED;
+  --socar-purple-dark: #5B21B6;
+
+  --socar-green-soft: #D7F5E3;
+  --socar-green: #10B981;
+  --socar-green-dark: #047857;
+
+  /* ---- Semantic Colors (Light Mode) ---- */
+  --bg-base: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-grouped: var(--socar-grey-010);
+  --bg-row-hover: var(--socar-grey-015);
+  --bg-table-header: var(--socar-grey-100);
+
+  --text-primary: var(--socar-grey-100);
+  --text-secondary: var(--socar-grey-080);
+  --text-tertiary: var(--socar-grey-060);
+  --text-quaternary: var(--socar-grey-040);
+  --text-on-dark: #FFFFFF;
+
+  --border-base: var(--socar-grey-020);
+  --border-strong: var(--socar-grey-030);
+  --border-focus: var(--socar-blue);
+
+  /* ---- Elevation (light mode only — dark mode uses color, not shadow) ---- */
+  --shadow-card: 0 1px 3px rgba(23, 27, 28, 0.04), 0 1px 2px rgba(23, 27, 28, 0.06);
+  --shadow-card-hover: 0 4px 12px rgba(23, 27, 28, 0.08), 0 2px 4px rgba(23, 27, 28, 0.04);
+  --shadow-popover: 0 8px 24px rgba(23, 27, 28, 0.12), 0 4px 8px rgba(23, 27, 28, 0.06);
+
+  /* ---- Radius (Socar 표준) ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+
+  /* ---- Sizes (3단계 Origin) ---- */
+  --btn-h-large: 44px;
+  --btn-h-medium: 36px;
+  --btn-h-small: 28px;
+  --tag-h: 22px;
+
+  /* ---- Typography ---- */
+  --font-sans: 'Pretendard Variable', Pretendard, 'Nunito Sans', -apple-system,
+               BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --letter-spacing-base: 0.2px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg-grouped);
+  --color-foreground: var(--text-primary);
+  --font-sans: 'Pretendard Variable', Pretendard, 'Nunito Sans', -apple-system,
+               BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+}
+
+/* ========================================================================
+   Base
+   ======================================================================== */
+
+html, body {
+  font-family: var(--font-sans);
+  letter-spacing: var(--letter-spacing-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-grouped);
+  color: var(--text-primary);
+}
+
+/* ========================================================================
+   Socar Components — 네이밍: [size]-[type]-[component]-[theme]
+   ======================================================================== */
+
+/* ---- Button: ActionButton ---- */
+.socar-btn-large-fill-blue {
+  height: var(--btn-h-large);
+  padding: 0 20px;
+  background: var(--socar-blue);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-base);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 160px;
+}
+.socar-btn-large-fill-blue:hover:not(:disabled) {
+  background: var(--socar-blue-dark);
+}
+.socar-btn-large-fill-blue:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.socar-btn-large-fill-blue:disabled {
+  background: var(--socar-grey-030);
+  color: var(--text-on-dark);
+  cursor: not-allowed;
+}
+
+.socar-btn-medium-outlined-grey {
+  height: var(--btn-h-medium);
+  padding: 0 14px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-base);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.socar-btn-medium-outlined-grey:hover:not(:disabled) {
+  background: var(--bg-grouped);
+  border-color: var(--border-strong);
+}
+.socar-btn-medium-outlined-grey:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ---- TextButton ---- */
+.socar-btn-text {
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: color 0.15s ease;
+  letter-spacing: var(--letter-spacing-base);
+}
+.socar-btn-text:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+.socar-btn-text-danger:hover {
+  color: var(--socar-red);
+}
+
+/* ---- Card (Surface elevated) ---- */
+.socar-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+}
+
+.socar-card-summary {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  padding: 16px 18px;
+  min-width: 160px;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+  user-select: none;
+}
+.socar-card-summary:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--socar-blue-light);
+}
+.socar-card-summary[data-selected="true"] {
+  border-color: var(--socar-blue);
+  background: var(--socar-blue-soft);
+  box-shadow: 0 0 0 1px var(--socar-blue) inset;
+}
+.socar-card-summary[data-theme="purple"]:hover {
+  border-color: var(--socar-purple);
+}
+.socar-card-summary[data-theme="purple"][data-selected="true"] {
+  border-color: var(--socar-purple);
+  background: var(--socar-purple-soft);
+  box-shadow: 0 0 0 1px var(--socar-purple) inset;
+}
+.socar-card-summary[data-theme="green"]:hover {
+  border-color: var(--socar-green);
+}
+.socar-card-summary[data-theme="green"][data-selected="true"] {
+  border-color: var(--socar-green);
+  background: var(--socar-green-soft);
+  box-shadow: 0 0 0 1px var(--socar-green) inset;
+}
+
+.socar-card-primary {
+  background: linear-gradient(135deg, var(--socar-blue) 0%, var(--socar-blue-dark) 100%);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-xl);
+  padding: 16px 18px;
+  min-width: 160px;
+  box-shadow: var(--shadow-card);
+}
+
+/* ---- Tag (soft / solid variants) ---- */
+.socar-tag {
+  display: inline-flex;
+  align-items: center;
+  height: var(--tag-h);
+  padding: 0 8px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-base);
+  white-space: nowrap;
+}
+.socar-tag-soft-orange {
+  background: var(--socar-orange-soft);
+  color: var(--socar-orange-dark);
+}
+.socar-tag-soft-red {
+  background: var(--socar-red-soft);
+  color: var(--socar-red-dark);
+}
+.socar-tag-soft-blue {
+  background: var(--socar-blue-soft);
+  color: var(--socar-blue-dark);
+}
+
+/* ---- Input ---- */
+.socar-input {
+  height: var(--btn-h-medium);
+  padding: 0 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-primary);
+  letter-spacing: var(--letter-spacing-base);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+}
+.socar-input::placeholder {
+  color: var(--text-quaternary);
+}
+.socar-input:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
+}
+
+/* ---- Alert (error) ---- */
+.socar-alert-error {
+  background: var(--socar-red-soft);
+  border: 1px solid var(--socar-red);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+}
+.socar-alert-error-title {
+  color: var(--socar-red-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-base);
+}
+.socar-alert-error-desc {
+  color: var(--socar-red-dark);
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* ---- Table ---- */
+.socar-table-th {
+  background: var(--bg-table-header);
+  color: var(--text-on-dark);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-base);
+  padding: 10px 12px;
+  text-align: center;
+  white-space: nowrap;
+  position: relative;
+}
+.socar-table-th-cursor {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.socar-table-th-cursor:hover {
+  background: var(--socar-grey-080);
+}
+.socar-table-th-input {
+  margin-top: 6px;
+  width: 100%;
+  background: var(--socar-grey-080);
+  color: var(--text-on-dark);
+  border: 1px solid var(--socar-grey-060);
+  border-radius: var(--radius-sm);
+  padding: 3px 6px;
+  font-size: 11px;
+  letter-spacing: var(--letter-spacing-base);
+  outline: none;
+}
+.socar-table-th-input:focus {
+  border-color: var(--socar-blue-light);
+}
+.socar-table-th-input::placeholder {
+  color: var(--socar-grey-040);
+}
+
+.socar-table-td {
+  padding: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.socar-table-row:hover {
+  background: var(--bg-row-hover);
+}
+.socar-table-resize-handle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  cursor: col-resize;
+  z-index: 20;
+  transition: background-color 0.15s ease;
+}
+.socar-table-resize-handle:hover {
+  background: var(--socar-blue-light);
+}
+
+/* ---- Header (TopAppBar 패턴) ---- */
+.socar-topbar {
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-base);
+  padding: 16px 24px;
+}
+
+/* ---- Memo cell ---- */
+.socar-memo-cell {
+  min-width: 80px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  min-height: 28px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.socar-memo-cell:hover {
+  background: var(--socar-blue-soft);
+  border-color: var(--socar-blue-light);
+}
+.socar-memo-input {
+  width: 100%;
+  min-width: 120px;
+  padding: 6px 10px;
+  font-size: 12px;
+  color: var(--text-primary);
+  border: 1px solid var(--socar-blue);
+  border-radius: var(--radius-sm);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
 }
