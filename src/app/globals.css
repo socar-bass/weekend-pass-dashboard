@@ -1,403 +1,494 @@
 @import "tailwindcss";
 
-/* ========================================================================
-   Socar Frame 2.0 Design Tokens
-   ref: c:\Users\socar\Desktop\socar-frame-design-guide.md
-   ======================================================================== */
+/* =========================================================================
+   Socar Frame 2.0 — Official Design Tokens
+   Source: https://socarframe.socar.me/development/foundation
+   Last sync: 2026-05-14
+   ========================================================================= */
 
 :root {
-  /* ---- Basic Colors: Grey (8단계) ---- */
-  --socar-grey-010: #F5F6F7;
-  --socar-grey-015: #EDEEF0;
-  --socar-grey-020: #E0E2E5;
-  --socar-grey-030: #BFC2C7;
-  --socar-grey-040: #9CA1A8;
-  --socar-grey-060: #6B7079;
-  --socar-grey-080: #3D4147;
-  --socar-grey-100: #171B1C;
+  /* ---------- Common ---------- */
+  --color-white: #FFFFFF;
+  --color-black: #000000;
 
-  /* ---- Basic Colors: Tint Main (Socar Marine Blue) ---- */
-  --socar-blue-soft: #E5F0FF;
-  --socar-blue-light: #4D8FFF;
-  --socar-blue: #0066FF;
-  --socar-blue-dark: #0052CC;
-  --socar-blue-darker: #003D99;
+  /* ---------- Gray (11단계, gray-50 ~ gray-1000) ---------- */
+  --gray-50:   #F9F9FB;
+  --gray-100:  #F2F3F8;
+  --gray-200:  #E5E8EF;
+  --gray-300:  #CBD1DC;
+  --gray-400:  #B4BBCB;
+  --gray-500:  #99A1B1;
+  --gray-600:  #697383;
+  --gray-700:  #4A5667;
+  --gray-800:  #354153;
+  --gray-900:  #262F3C;
+  --gray-1000: #141A24;
 
-  /* ---- Basic Colors: Service Tints ---- */
-  --socar-red-soft: #FFE5E8;
-  --socar-red: #E5354A;
-  --socar-red-dark: #B82838;
+  /* ---------- Blue (Primary brand) ---------- */
+  --blue-50:  #EBF5FF;
+  --blue-100: #D6EBFF;
+  --blue-200: #99CEFF;
+  --blue-300: #6BB5FF;
+  --blue-400: #3393FF;
+  --blue-500: #0078FF;
+  --blue-600: #0069FF;
+  --blue-700: #0052E0;
+  --blue-800: #0042C7;
+  --blue-900: #0033A9;
 
-  --socar-orange-soft: #FFE9D9;
-  --socar-orange: #FF6B0F;
-  --socar-orange-dark: #C75100;
+  /* ---------- Green / Red / Orange / Purple (필요 단계만) ---------- */
+  --green-50:  #E6FEF0;
+  --green-100: #D3FDE5;
+  --green-500: #04CA81;
+  --green-600: #00BB83;
+  --green-700: #00AE82;
 
-  --socar-purple-soft: #F0E8FF;
-  --socar-purple: #7C3AED;
-  --socar-purple-dark: #5B21B6;
+  --red-50:  #FFF0F3;
+  --red-100: #FFDBDF;
+  --red-500: #FF3A5B;
+  --red-600: #F51441;
+  --red-700: #E60532;
 
-  --socar-green-soft: #D7F5E3;
-  --socar-green: #10B981;
-  --socar-green-dark: #047857;
+  --orange-50:  #FFF8E6;
+  --orange-100: #FFF3CC;
+  --orange-500: #FF8800;
+  --orange-600: #FA7900;
+  --orange-700: #F56A00;
 
-  /* ---- Semantic Colors (Light Mode) ---- */
-  --bg-base: #FFFFFF;
-  --bg-elevated: #FFFFFF;
-  --bg-grouped: var(--socar-grey-010);
-  --bg-row-hover: var(--socar-grey-015);
-  --bg-table-header: var(--socar-grey-100);
+  --purple-50:  #F5F0FF;
+  --purple-100: #EAE1FE;
+  --purple-500: #956BFF;
+  --purple-600: #8355FF;
+  --purple-700: #7444F4;
 
-  --text-primary: var(--socar-grey-100);
-  --text-secondary: var(--socar-grey-080);
-  --text-tertiary: var(--socar-grey-060);
-  --text-quaternary: var(--socar-grey-040);
-  --text-on-dark: #FFFFFF;
+  /* ---------- Semantic — Text ---------- */
+  --text-strong:    #141A24;
+  --text-primary:   #354153;
+  --text-secondary: #697383;
+  --text-tertiary:  #99A1B1;
+  --text-disabled:  #B4BBCB;
 
-  --border-base: var(--socar-grey-020);
-  --border-strong: var(--socar-grey-030);
-  --border-focus: var(--socar-blue);
+  /* ---------- Semantic — Primary brand ---------- */
+  --primary-regular: #0078FF;
+  --primary-strong:  #0069FF;
+  --primary-heavy:   #0052E0;
 
-  /* ---- Elevation (light mode only — dark mode uses color, not shadow) ---- */
-  --shadow-card: 0 1px 3px rgba(23, 27, 28, 0.04), 0 1px 2px rgba(23, 27, 28, 0.06);
-  --shadow-card-hover: 0 4px 12px rgba(23, 27, 28, 0.08), 0 2px 4px rgba(23, 27, 28, 0.04);
-  --shadow-popover: 0 8px 24px rgba(23, 27, 28, 0.12), 0 4px 8px rgba(23, 27, 28, 0.06);
+  /* ---------- Semantic — Status (weak/regular/strong) ---------- */
+  --status-information-weak:    #EBF5FF;
+  --status-information-regular: #0078FF;
+  --status-information-strong:  #0069FF;
+  --status-positive-weak:       #E6FEF0;
+  --status-positive-regular:    #04CA81;
+  --status-positive-strong:     #00BB83;
+  --status-caution-weak:        #FFF8E6;
+  --status-caution-regular:     #FF8800;
+  --status-caution-strong:      #FA7900;
+  --status-negative-weak:       #FFF0F3;
+  --status-negative-regular:    #FF3A5B;
+  --status-negative-strong:     #F51441;
 
-  /* ---- Radius (Socar 표준) ---- */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  /* ---------- Semantic — Background / Border / Divider ---------- */
+  --background-regular: #F2F3F8;
+  --border-weak:        #F2F3F8;
+  --border-regular:     #E5E8EF;
+  --divider-weak:       #F2F3F8;
+  --divider-regular:    #E5E8EF;
+
+  /* ---------- Service ---------- */
+  --service-socar:    #0078FF;
+  --service-business: #0033A9;
+
+  /* ---------- Spacing scale (1 unit = 4px) ---------- */
+  --spacing-0:    0;
+  --spacing-25:   1px;
+  --spacing-50:   2px;
+  --spacing-100:  4px;
+  --spacing-150:  6px;
+  --spacing-200:  8px;
+  --spacing-250:  10px;
+  --spacing-300:  12px;
+  --spacing-350:  14px;
+  --spacing-400:  16px;
+  --spacing-450:  18px;
+  --spacing-500:  20px;
+  --spacing-550:  22px;
+  --spacing-600:  24px;
+  --spacing-700:  28px;
+  --spacing-800:  32px;
+  --spacing-900:  36px;
+  --spacing-1000: 40px;
+
+  /* ---------- Radius (Button spec 기준) ---------- */
+  --radius-200:  8px;   /* xSmall btn */
+  --radius-250:  10px;  /* small btn */
+  --radius-300:  12px;  /* medium btn */
+  --radius-350:  14px;  /* large btn */
+  --radius-400:  16px;  /* card */
   --radius-pill: 999px;
 
-  /* ---- Sizes (3단계 Origin) ---- */
-  --btn-h-large: 44px;
-  --btn-h-medium: 36px;
-  --btn-h-small: 28px;
-  --tag-h: 22px;
+  /* ---------- Font ---------- */
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Helvetica, Arial, sans-serif;
 
-  /* ---- Typography ---- */
-  --font-sans: 'Pretendard Variable', Pretendard, 'Nunito Sans', -apple-system,
-               BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --letter-spacing-base: 0.2px;
+  /* ---------- Shadow (light mode 그림자) ---------- */
+  --shadow-card:       0 1px 3px rgba(20, 26, 36, 0.04), 0 1px 2px rgba(20, 26, 36, 0.06);
+  --shadow-card-hover: 0 4px 12px rgba(20, 26, 36, 0.08), 0 2px 4px rgba(20, 26, 36, 0.04);
+  --shadow-popover:    0 8px 24px rgba(20, 26, 36, 0.12), 0 4px 8px rgba(20, 26, 36, 0.06);
+
+  /* =================================================================
+     Backward-compat aliases (기존 코드 호환용 — 모두 공식값으로 매핑)
+     ================================================================= */
+  --socar-grey-010: #F9F9FB;
+  --socar-grey-015: #F2F3F8;
+  --socar-grey-020: #E5E8EF;
+  --socar-grey-030: #CBD1DC;
+  --socar-grey-040: #B4BBCB;
+  --socar-grey-060: #697383;
+  --socar-grey-080: #354153;
+  --socar-grey-100: #141A24;
+
+  --socar-blue-soft:   #EBF5FF;
+  --socar-blue-light:  #3393FF;
+  --socar-blue:        #0078FF;
+  --socar-blue-dark:   #0069FF;
+  --socar-blue-darker: #0052E0;
+
+  --socar-red-soft: #FFF0F3;
+  --socar-red:      #FF3A5B;
+  --socar-red-dark: #F51441;
+
+  --socar-orange-soft: #FFF8E6;
+  --socar-orange:      #FF8800;
+  --socar-orange-dark: #FA7900;
+
+  --socar-purple-soft: #F5F0FF;
+  --socar-purple:      #956BFF;
+  --socar-purple-dark: #8355FF;
+
+  --socar-green-soft: #E6FEF0;
+  --socar-green:      #04CA81;
+  --socar-green-dark: #00BB83;
+
+  --bg-base:         #FFFFFF;
+  --bg-elevated:     #FFFFFF;
+  --bg-grouped:      #F2F3F8;
+  --bg-row-hover:    #F2F3F8;
+  --bg-table-header: #141A24;
+
+  --text-on-dark:    #FFFFFF;
+  --text-quaternary: #B4BBCB;
+
+  --border-base:   #E5E8EF;
+  --border-strong: #CBD1DC;
+  --border-focus:  #0078FF;
+
+  /* CHANGED: 공식은 0px (이전엔 0.2px 잘못 사용) */
+  --letter-spacing-base: 0;
+
+  /* Legacy radius aliases */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
 }
 
 @theme inline {
-  --color-background: var(--bg-grouped);
-  --color-foreground: var(--text-primary);
-  --font-sans: 'Pretendard Variable', Pretendard, 'Nunito Sans', -apple-system,
-               BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --color-background: #F2F3F8;
+  --color-foreground: #141A24;
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Helvetica, Arial, sans-serif;
 }
-
-/* ========================================================================
-   Base
-   ======================================================================== */
 
 html, body {
   font-family: var(--font-sans);
-  letter-spacing: var(--letter-spacing-base);
+  letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  background: var(--bg-grouped);
-  color: var(--text-primary);
+  background: var(--background-regular);
+  color: var(--text-strong);
 }
 
-/* ========================================================================
-   Socar Components — 네이밍: [size]-[type]-[component]-[theme]
-   ======================================================================== */
+/* =========================================================================
+   Typography utility classes (공식 16 styles)
+   ========================================================================= */
+.t-display-1  { font-size: 40px; line-height: 50px; font-weight: 700; letter-spacing: -0.6px; }
+.t-display-2  { font-size: 36px; line-height: 44px; font-weight: 700; letter-spacing: -0.6px; }
+.t-heading-1  { font-size: 26px; line-height: 36px; font-weight: 700; }
+.t-heading-2  { font-size: 24px; line-height: 34px; font-weight: 700; }
+.t-heading-3  { font-size: 22px; line-height: 30px; font-weight: 700; }
+.t-title-1    { font-size: 18px; line-height: 26px; font-weight: 600; }
+.t-title-2    { font-size: 16px; line-height: 24px; font-weight: 600; }
+.t-title-3    { font-size: 14px; line-height: 22px; font-weight: 600; }
+.t-title-4    { font-size: 13px; line-height: 20px; font-weight: 600; }
+.t-body-1     { font-size: 18px; line-height: 26px; font-weight: 400; }
+.t-body-2     { font-size: 16px; line-height: 24px; font-weight: 400; }
+.t-body-3     { font-size: 14px; line-height: 22px; font-weight: 400; }
+.t-body-4     { font-size: 13px; line-height: 20px; font-weight: 400; }
+.t-caption-1  { font-size: 12px; line-height: 18px; font-weight: 600; }
+.t-caption-2  { font-size: 12px; line-height: 18px; font-weight: 500; }
+.t-caption-3  { font-size: 10px; line-height: 16px; font-weight: 600; }
 
-/* ---- Button: ActionButton ---- */
-.socar-btn-large-fill-blue {
-  height: var(--btn-h-large);
-  padding: 0 20px;
-  background: var(--socar-blue);
-  color: var(--text-on-dark);
-  border-radius: var(--radius-md);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: var(--letter-spacing-base);
+/* =========================================================================
+   ActionButton (공식 스펙: styleType × variant × size)
+   ========================================================================= */
+
+/* Size base (padding & radius & typography from spacing/typography scale) */
+.socar-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
   border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+  white-space: nowrap;
+}
+.socar-action-btn:disabled { cursor: not-allowed; }
+.socar-action-btn:active:not(:disabled) { transform: scale(0.98); }
+
+.socar-action-btn--large  { font-size: 16px; line-height: 24px; font-weight: 600; padding: 16px 22px; border-radius: 14px; }
+.socar-action-btn--medium { font-size: 14px; line-height: 22px; font-weight: 600; padding: 12px 18px; border-radius: 12px; }
+.socar-action-btn--small  { font-size: 13px; line-height: 20px; font-weight: 600; padding: 10px 16px; border-radius: 10px; }
+.socar-action-btn--xSmall { font-size: 12px; line-height: 18px; font-weight: 500; padding: 6px 10px;  border-radius: 8px; }
+
+/* Fill variants */
+.socar-action-btn--fill-primary    { background: var(--primary-regular); color: white; }
+.socar-action-btn--fill-primary:hover:not(:disabled)    { background: var(--primary-strong); }
+.socar-action-btn--fill-primary:disabled                { background: var(--gray-300); color: white; }
+
+.socar-action-btn--fill-secondary  { background: var(--blue-100); color: var(--primary-heavy); }
+.socar-action-btn--fill-secondary:hover:not(:disabled)  { background: #C2DEFF; }
+.socar-action-btn--fill-secondary:disabled              { background: var(--gray-100); color: var(--text-disabled); }
+
+.socar-action-btn--fill-tertiary   { background: var(--gray-100); color: var(--text-primary); }
+.socar-action-btn--fill-tertiary:hover:not(:disabled)   { background: var(--gray-200); }
+.socar-action-btn--fill-tertiary:disabled               { background: var(--gray-50); color: var(--text-disabled); }
+
+/* Outlined variants */
+.socar-action-btn--outlined-primary    { background: white; border: 1px solid var(--primary-regular); color: var(--primary-regular); }
+.socar-action-btn--outlined-primary:hover:not(:disabled){ background: var(--blue-50); }
+.socar-action-btn--outlined-primary:disabled            { border-color: var(--gray-300); color: var(--text-disabled); }
+
+.socar-action-btn--outlined-secondary  { background: white; border: 1px solid var(--border-regular); color: var(--text-primary); }
+.socar-action-btn--outlined-secondary:hover:not(:disabled){ background: var(--gray-50); border-color: var(--gray-300); }
+.socar-action-btn--outlined-secondary:disabled          { opacity: 0.4; }
+
+/* Backward-compat (이전 클래스명 유지) */
+.socar-btn-large-fill-blue {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 48px; min-width: 160px; padding: 0 22px;
+  background: var(--primary-regular); color: white;
+  border-radius: 14px; border: none;
+  font-size: 16px; font-weight: 600; line-height: 24px;
   cursor: pointer;
   transition: background-color 0.15s ease, transform 0.05s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  min-width: 160px;
 }
-.socar-btn-large-fill-blue:hover:not(:disabled) {
-  background: var(--socar-blue-dark);
-}
-.socar-btn-large-fill-blue:active:not(:disabled) {
-  transform: scale(0.98);
-}
-.socar-btn-large-fill-blue:disabled {
-  background: var(--socar-grey-030);
-  color: var(--text-on-dark);
-  cursor: not-allowed;
-}
+.socar-btn-large-fill-blue:hover:not(:disabled) { background: var(--primary-strong); }
+.socar-btn-large-fill-blue:active:not(:disabled){ transform: scale(0.98); }
+.socar-btn-large-fill-blue:disabled { background: var(--gray-300); color: white; cursor: not-allowed; }
 
 .socar-btn-medium-outlined-grey {
-  height: var(--btn-h-medium);
-  padding: 0 14px;
-  background: var(--bg-elevated);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-base);
-  border-radius: var(--radius-md);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: var(--letter-spacing-base);
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 38px; padding: 0 16px;
+  background: white; color: var(--text-primary);
+  border: 1px solid var(--border-regular); border-radius: 12px;
+  font-size: 14px; font-weight: 600; line-height: 22px;
   cursor: pointer;
   transition: background-color 0.15s ease, border-color 0.15s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
-.socar-btn-medium-outlined-grey:hover:not(:disabled) {
-  background: var(--bg-grouped);
-  border-color: var(--border-strong);
-}
-.socar-btn-medium-outlined-grey:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+.socar-btn-medium-outlined-grey:hover:not(:disabled) { background: var(--gray-50); border-color: var(--gray-300); }
+.socar-btn-medium-outlined-grey:disabled { opacity: 0.4; cursor: not-allowed; }
 
-/* ---- TextButton ---- */
+/* TextButton */
 .socar-btn-text {
-  background: transparent;
-  border: none;
+  background: transparent; border: none;
   padding: 4px 6px;
-  font-size: 12px;
-  color: var(--text-tertiary);
-  cursor: pointer;
+  font-size: 12px; font-weight: 500; line-height: 18px;
+  color: var(--text-tertiary); cursor: pointer;
   transition: color 0.15s ease;
-  letter-spacing: var(--letter-spacing-base);
 }
-.socar-btn-text:hover {
-  color: var(--text-primary);
-  text-decoration: underline;
-}
-.socar-btn-text-danger:hover {
-  color: var(--socar-red);
-}
+.socar-btn-text:hover        { color: var(--text-primary); text-decoration: underline; }
+.socar-btn-text-danger:hover { color: var(--status-negative-regular); }
 
-/* ---- Card (Surface elevated) ---- */
+/* =========================================================================
+   Card (Surface)
+   ========================================================================= */
 .socar-card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-base);
-  border-radius: var(--radius-xl);
+  background: white;
+  border: 1px solid var(--border-regular);
+  border-radius: 16px;
   box-shadow: var(--shadow-card);
 }
 
 .socar-card-summary {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-base);
-  border-radius: var(--radius-xl);
+  background: white;
+  border: 1px solid var(--border-regular);
+  border-radius: 16px;
   box-shadow: var(--shadow-card);
   padding: 16px 18px;
   min-width: 160px;
   cursor: pointer;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
   user-select: none;
 }
-.socar-card-summary:hover {
-  box-shadow: var(--shadow-card-hover);
-  border-color: var(--socar-blue-light);
-}
+.socar-card-summary:hover { box-shadow: var(--shadow-card-hover); border-color: var(--blue-300); }
 .socar-card-summary[data-selected="true"] {
-  border-color: var(--socar-blue);
-  background: var(--socar-blue-soft);
-  box-shadow: 0 0 0 1px var(--socar-blue) inset;
+  border-color: var(--primary-regular);
+  background: var(--blue-50);
+  box-shadow: 0 0 0 1px var(--primary-regular) inset;
 }
-.socar-card-summary[data-theme="purple"]:hover {
-  border-color: var(--socar-purple);
-}
+.socar-card-summary[data-theme="purple"]:hover { border-color: var(--purple-500); }
 .socar-card-summary[data-theme="purple"][data-selected="true"] {
-  border-color: var(--socar-purple);
-  background: var(--socar-purple-soft);
-  box-shadow: 0 0 0 1px var(--socar-purple) inset;
+  border-color: var(--purple-500); background: var(--purple-50);
+  box-shadow: 0 0 0 1px var(--purple-500) inset;
 }
-.socar-card-summary[data-theme="green"]:hover {
-  border-color: var(--socar-green);
-}
+.socar-card-summary[data-theme="green"]:hover { border-color: var(--green-500); }
 .socar-card-summary[data-theme="green"][data-selected="true"] {
-  border-color: var(--socar-green);
-  background: var(--socar-green-soft);
-  box-shadow: 0 0 0 1px var(--socar-green) inset;
+  border-color: var(--green-500); background: var(--green-50);
+  box-shadow: 0 0 0 1px var(--green-500) inset;
 }
 
 .socar-card-primary {
-  background: linear-gradient(135deg, var(--socar-blue) 0%, var(--socar-blue-dark) 100%);
-  color: var(--text-on-dark);
-  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, var(--primary-regular) 0%, var(--primary-strong) 100%);
+  color: white;
+  border-radius: 16px;
   padding: 16px 18px;
   min-width: 160px;
   box-shadow: var(--shadow-card);
 }
 
-/* ---- Tag (soft / solid variants) ---- */
+/* =========================================================================
+   Tag (공식: type × size × bold) — status 시멘틱 토큰 매핑
+   ========================================================================= */
 .socar-tag {
-  display: inline-flex;
-  align-items: center;
-  height: var(--tag-h);
-  padding: 0 8px;
-  border-radius: var(--radius-pill);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: var(--letter-spacing-base);
+  display: inline-flex; align-items: center;
+  height: 22px; padding: 0 8px;
+  border-radius: 999px;
+  font-size: 11px; font-weight: 600; line-height: 1;
   white-space: nowrap;
 }
-.socar-tag-soft-orange {
-  background: var(--socar-orange-soft);
-  color: var(--socar-orange-dark);
-}
-.socar-tag-soft-red {
-  background: var(--socar-red-soft);
-  color: var(--socar-red-dark);
-}
-.socar-tag-soft-blue {
-  background: var(--socar-blue-soft);
-  color: var(--socar-blue-dark);
-}
+.socar-tag-soft-orange { background: var(--status-caution-weak);     color: var(--status-caution-strong); }
+.socar-tag-soft-red    { background: var(--status-negative-weak);    color: var(--status-negative-strong); }
+.socar-tag-soft-blue   { background: var(--status-information-weak); color: var(--status-information-strong); }
+.socar-tag-soft-green  { background: var(--status-positive-weak);    color: var(--status-positive-strong); }
 
-/* ---- Input ---- */
+/* =========================================================================
+   Input
+   ========================================================================= */
 .socar-input {
-  height: var(--btn-h-medium);
+  height: 38px;
   padding: 0 12px;
-  background: var(--bg-elevated);
-  border: 1px solid var(--border-base);
-  border-radius: var(--radius-md);
-  font-size: 13px;
+  background: white;
   color: var(--text-primary);
-  letter-spacing: var(--letter-spacing-base);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid var(--border-regular);
+  border-radius: 12px;
+  font-size: 14px; line-height: 22px;
   outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.socar-input::placeholder {
-  color: var(--text-quaternary);
-}
-.socar-input:focus {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
-}
+.socar-input::placeholder { color: var(--text-tertiary); }
+.socar-input:focus { border-color: var(--primary-regular); box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.12); }
 
-/* ---- Alert (error) ---- */
+/* =========================================================================
+   Alert (status-negative 시멘틱)
+   ========================================================================= */
 .socar-alert-error {
-  background: var(--socar-red-soft);
-  border: 1px solid var(--socar-red);
-  border-radius: var(--radius-lg);
+  background: var(--status-negative-weak);
+  border: 1px solid var(--status-negative-regular);
+  border-radius: 12px;
   padding: 14px 16px;
 }
 .socar-alert-error-title {
-  color: var(--socar-red-dark);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: var(--letter-spacing-base);
+  color: var(--status-negative-strong);
+  font-size: 13px; font-weight: 600; line-height: 20px;
 }
 .socar-alert-error-desc {
-  color: var(--socar-red-dark);
-  font-size: 12px;
-  margin-top: 4px;
-  opacity: 0.8;
+  color: var(--status-negative-strong);
+  font-size: 12px; line-height: 18px;
+  margin-top: 4px; opacity: 0.8;
 }
 
-/* ---- Table ---- */
+/* =========================================================================
+   Table
+   ========================================================================= */
 .socar-table-th {
-  background: var(--bg-table-header);
-  color: var(--text-on-dark);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: var(--letter-spacing-base);
+  background: var(--gray-1000);
+  color: white;
+  font-size: 13px; font-weight: 600; line-height: 20px;
   padding: 10px 12px;
   text-align: center;
   white-space: nowrap;
   position: relative;
 }
-.socar-table-th-cursor {
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-.socar-table-th-cursor:hover {
-  background: var(--socar-grey-080);
-}
+.socar-table-th-cursor { cursor: pointer; transition: background-color 0.15s ease; }
+.socar-table-th-cursor:hover { background: var(--gray-900); }
 .socar-table-th-input {
   margin-top: 6px;
   width: 100%;
-  background: var(--socar-grey-080);
-  color: var(--text-on-dark);
-  border: 1px solid var(--socar-grey-060);
-  border-radius: var(--radius-sm);
+  background: var(--gray-800);
+  color: white;
+  border: 1px solid var(--gray-700);
+  border-radius: 8px;
   padding: 3px 6px;
-  font-size: 11px;
-  letter-spacing: var(--letter-spacing-base);
+  font-size: 11px; line-height: 1.3;
   outline: none;
 }
-.socar-table-th-input:focus {
-  border-color: var(--socar-blue-light);
-}
-.socar-table-th-input::placeholder {
-  color: var(--socar-grey-040);
-}
+.socar-table-th-input:focus       { border-color: var(--blue-400); }
+.socar-table-th-input::placeholder{ color: var(--gray-500); }
 
 .socar-table-td {
   padding: 12px;
-  font-size: 13px;
+  font-size: 13px; line-height: 20px;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.socar-table-row:hover {
-  background: var(--bg-row-hover);
-}
+.socar-table-row:hover { background: var(--gray-50); }
 .socar-table-resize-handle {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  width: 4px;
-  cursor: col-resize;
-  z-index: 20;
+  position: absolute; right: 0; top: 0;
+  height: 100%; width: 4px;
+  cursor: col-resize; z-index: 20;
   transition: background-color 0.15s ease;
 }
-.socar-table-resize-handle:hover {
-  background: var(--socar-blue-light);
-}
+.socar-table-resize-handle:hover { background: var(--blue-400); }
 
-/* ---- Header (TopAppBar 패턴) ---- */
+/* =========================================================================
+   TopAppBar (헤더)
+   ========================================================================= */
 .socar-topbar {
-  background: var(--bg-elevated);
-  border-bottom: 1px solid var(--border-base);
+  background: white;
+  border-bottom: 1px solid var(--border-regular);
   padding: 16px 24px;
 }
 
-/* ---- Memo cell ---- */
+/* =========================================================================
+   Memo cell
+   ========================================================================= */
 .socar-memo-cell {
   min-width: 80px;
   padding: 6px 10px;
-  font-size: 12px;
-  color: var(--text-tertiary);
+  font-size: 12px; line-height: 18px;
+  color: var(--text-secondary);
   cursor: pointer;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   border: 1px solid transparent;
   min-height: 28px;
   transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-.socar-memo-cell:hover {
-  background: var(--socar-blue-soft);
-  border-color: var(--socar-blue-light);
-}
+.socar-memo-cell:hover { background: var(--blue-50); border-color: var(--blue-300); }
 .socar-memo-input {
   width: 100%;
   min-width: 120px;
   padding: 6px 10px;
-  font-size: 12px;
+  font-size: 12px; line-height: 18px;
   color: var(--text-primary);
-  border: 1px solid var(--socar-blue);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--primary-regular);
+  border-radius: 8px;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.12);
+  box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.12);
 }
